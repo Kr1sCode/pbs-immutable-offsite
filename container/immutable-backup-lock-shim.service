@@ -1,0 +1,12 @@
+[Unit]
+Description=Bind local writable file over Immutable-backup/.lock (offsite stays read-only)
+After=local-fs.target
+Before=proxmox-backup-proxy.service proxmox-backup.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/immutable-backup-lock-shim.sh
+
+[Install]
+WantedBy=multi-user.target

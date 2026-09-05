@@ -1,0 +1,15 @@
+[Unit]
+Description=Mount read-only offsite view of PBS datastore (Hetzner Storage Box)
+After=network-online.target
+Wants=network-online.target
+# Podmien "CTID" na ID kontenera PBS (np. pve-container@100.service)
+Before=pve-container@CTID.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/immutable-backup-mount.sh
+ExecStop=/bin/fusermount -u /mnt/immutable-backup
+
+[Install]
+WantedBy=multi-user.target
